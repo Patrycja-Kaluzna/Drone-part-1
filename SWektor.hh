@@ -4,50 +4,110 @@
 #include <iostream>
 #include <cmath>
 
-/*
- * Szablon klasy modelującej pojęcie wektora, którego
- * główną cechą są jego współrzędne. Szablon jest 
- * parametryzowany typem liczb będących wspołrzędnymi
- * wektora oraz rozmiarem wektora, czyli ilością jego
- * współrzędnych.
+/*!
+ * \brief Szablon klasy modelującej pojęcie wektora, 
+ * którego główną cechą są jego współrzędne. Szablon 
+ * jest  parametryzowany typem liczb będących 
+ * wspołrzędnymi wektora oraz rozmiarem wektora, 
+ * czyli ilością jego współrzędnych.
  */
 template <typename typ, int rozmiar>
 class SWektor {
 
-    typ wspolrzedne [rozmiar];      // Wspolrzedne wektora
-    
-    //static int ilosc;
+    typ wspolrzedne [rozmiar];
+
+    static unsigned int aktualna_ilosc;
+
+    static unsigned int laczna_ilosc;
 
     public:
 
-    //SWektor () {++ilosc;}
+    /*!
+     * \brief Inkrementuje aktualną i łączną ilość obiektów klasy SWektor.
+     */ 
+    SWektor () {
+        ++aktualna_ilosc; ++laczna_ilosc;}
 
-    //~SWektor () {--ilosc;}
+    /*!
+     * \brief Inkrementuje aktualną i łączną ilość obiektów klasy SWektor.
+     */ 
+    SWektor (const SWektor<typ, rozmiar> & SWek) {
+        *this = SWek; ++aktualna_ilosc; ++laczna_ilosc;}
 
-    typ operator [] (unsigned int indeks) const {       // Umozliwia czytanie wspolrzednych wektora
+    /*!
+     * \brief Dekrementuje aktualną ilość obiektów klasy SWektor.
+     */ 
+    ~SWektor () {--aktualna_ilosc;}
+
+    /*!
+     * \brief Umożliwia czytanie aktualnej ilości obiektów klasy SWektor.
+     */
+    static unsigned int get_aktualna_ilosc () {return aktualna_ilosc;}
+
+    /*!
+     * \brief Umożliwia czytanie łącznej ilości obiektów klasy SWektor
+     * powstałych w trakcie działania programu.
+     */ 
+    static unsigned int get_laczna_ilosc () {return laczna_ilosc;}
+
+    /*!
+     * \brief Umozliwia czytanie wspolrzednych wektora.
+     */ 
+    typ operator [] (unsigned int indeks) const {     
         return wspolrzedne [indeks]; }
 
-    typ & operator [] (unsigned int indeks) {       // Umozliwia wczytywanie wspolrzednych wektora
+    /*!
+     * \brief Umozliwia wczytywanie wspolrzednych wektora.
+     */ 
+    typ & operator [] (unsigned int indeks) {   
         return wspolrzedne [indeks]; }    
 
-    SWektor <typ, rozmiar> operator + (const SWektor <typ, rozmiar> Wek) const;   // Realizuje dodawanie wektorow
+    /*!
+     * \brief Realizuje dodawanie wektorow.
+     */ 
+    SWektor <typ, rozmiar> operator + (const SWektor <typ, rozmiar> Wek) const;
 
-    SWektor <typ, rozmiar> operator - (const SWektor <typ, rozmiar> Wek) const;   // Realizuje odejmowanie wektorow
+    /*!
+     * \brief Realizuje odejmowanie wektorow.
+     */ 
+    SWektor <typ, rozmiar> operator - (const SWektor <typ, rozmiar> Wek) const;
 
-    typ operator * (const SWektor <typ, rozmiar> Wek) const;   // Realizuje mnozenie (iloczyn skalarny) wektorow
+    /*!
+     * \brief Realizuje mnozenie (iloczyn skalarny) wektorow.
+     */ 
+    typ operator * (const SWektor <typ, rozmiar> Wek) const;
 
-    SWektor <typ, rozmiar> operator * (const double lic) const;   // Realizuje mnozenie wektora przez liczbe
+    /*!
+     * \brief Realizuje mnozenie wektora przez liczbe.
+     */ 
+    SWektor <typ, rozmiar> operator * (const double lic) const;
 
-    SWektor <typ, rozmiar> operator / (const double lic) const;   // Realizuje dzielenie wektora przez liczbe
+    /*!
+     * \brief Realizuje dzielenie wektora przez liczbe.
+     */ 
+    SWektor <typ, rozmiar> operator / (const double lic) const;
 
-    SWektor <typ, rozmiar> iloczyn_wektorowy (const SWektor <typ, rozmiar> Wek) const;    // Relizuje mnozenie (iloczyn
-                                                                                          // wektorowy) wektorow
+    /*!
+     * \brief Relizuje mnozenie (iloczyn wektorowy) wektorow.
+     */ 
+    SWektor <typ, rozmiar> iloczyn_wektorowy (const SWektor <typ, rozmiar> Wek) const;
+                                                                                        
 };
 
 
 
-/*
- * Realizuje dodawanie wektorow
+template <typename typ, int rozmiar>
+unsigned int SWektor<typ, rozmiar>::aktualna_ilosc;
+
+
+
+template <typename typ, int rozmiar>
+unsigned int SWektor<typ, rozmiar>::laczna_ilosc;
+
+
+
+/*!
+ * \brief Realizuje dodawanie wektorow
  */ 
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator + (const SWektor <typ, rozmiar> Wek) const
@@ -65,8 +125,8 @@ SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator + (const SWektor <typ, ro
 
 
 
-/*
- * Realizuje odejmowanie wektorow
+/*!
+ * \brief Realizuje odejmowanie wektorow
  */ 
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator - (const SWektor <typ, rozmiar> Wek) const
@@ -84,8 +144,8 @@ SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator - (const SWektor <typ, ro
 
 
 
-/*
- * Realizuje mnozenie (iloczyn skalarny) wektorow
+/*!
+ * \brief Realizuje mnozenie (iloczyn skalarny) wektorow
  */ 
 template <typename typ, int rozmiar>
 typ SWektor <typ, rozmiar>::operator * (const SWektor <typ, rozmiar> Wek) const
@@ -104,8 +164,8 @@ typ SWektor <typ, rozmiar>::operator * (const SWektor <typ, rozmiar> Wek) const
 
 
 
-/*
- * Realizuje mnozenie wektora przez liczbe
+/*!
+ * \brief Realizuje mnozenie wektora przez liczbe
  */ 
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator * (const double lic) const
@@ -123,8 +183,8 @@ SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator * (const double lic) cons
 
 
 
-/*
- * Realizuje dzielenie wektora przez liczbe
+/*!
+ * \brief Realizuje dzielenie wektora przez liczbe
  */ 
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator / (const double lic) const
@@ -147,8 +207,8 @@ SWektor <typ, rozmiar> SWektor<typ, rozmiar>::operator / (const double lic) cons
 
 
 
-/*
- * Relizuje mnozenie (iloczyn wektorowy) wektorow
+/*!
+ * \brief Relizuje mnozenie (iloczyn wektorowy) wektorow
  */ 
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SWektor<typ, rozmiar>::iloczyn_wektorowy (const SWektor <typ, rozmiar> Wek) const
@@ -165,8 +225,8 @@ SWektor <typ, rozmiar> SWektor<typ, rozmiar>::iloczyn_wektorowy (const SWektor <
 
 
 
-/*
- * Wczytuje wspolrzedne wektora ze strumienia wejsciowego.
+/*!
+ * \brief Wczytuje wspolrzedne wektora ze strumienia wejsciowego.
  */
 template <typename typ, int rozmiar>
 std::istream & operator >> (std::istream & Str, SWektor <typ, rozmiar> & Wek)
@@ -183,8 +243,8 @@ std::istream & operator >> (std::istream & Str, SWektor <typ, rozmiar> & Wek)
 
 
 
-/*
- * Zapisuje wspolrzedne wektora na strumieniu wyjsciowym.
+/*!
+ * \brief Zapisuje wspolrzedne wektora na strumieniu wyjsciowym.
  */
 template <typename typ, int rozmiar>
 std::ostream & operator << (std::ostream & Str, const SWektor <typ, rozmiar> & Wek)

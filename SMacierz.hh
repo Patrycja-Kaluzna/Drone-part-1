@@ -4,47 +4,78 @@
 #include "SWektor.hh"
 #include <iostream>
 
-/*
- * Szablon klasy modelujacej pojecie macierzy, ktorej
+/*!
+ * \brief Szablon klasy modelujacej pojecie macierzy, ktorej
  * glowna cecha sa jej kolumny. Szablon jest 
  * parametryzowany typem liczb będących wspołrzędnymi
  * wektorow tworzacych kolumny oraz rozmiarem tych 
  * wektorow, czyli ilością ich współrzędnych.
  */
+
 template <typename typ, int rozmiar> 
 class SMacierz {
   
-    SWektor <typ, rozmiar> kolumny [rozmiar];   // Kolumny macierzy
+    SWektor <typ, rozmiar> kolumny [rozmiar];
     
     public:
 
-    typ operator () (unsigned int indeksK, unsigned int indeksW) const {   // Umozliwia czytanie elementow macierzy
+    /*!
+     * \brief Umozliwia czytanie elementow macierzy
+     */ 
+    typ operator () (unsigned int indeksK, unsigned int indeksW) const {  
     return kolumny[indeksK][indeksW];}
 
-    typ & operator () (unsigned int indeksK, unsigned int indeksW) {   // Umozliwia wczytywanie elementow macierzy
+    /*!
+     * \brief Umozliwia wczytywanie elementow macierzy
+     */ 
+    typ & operator () (unsigned int indeksK, unsigned int indeksW) { 
     return kolumny[indeksK][indeksW];}
 
-    SWektor <typ, rozmiar>  operator [] (unsigned int indeks) const {    // Umozliwia czytanie kolumn macierzy
+    /*!
+     * \brief Umozliwia czytanie kolumn macierzy
+     */ 
+    SWektor <typ, rozmiar>  operator [] (unsigned int indeks) const {   
     return kolumny[indeks];}
 
-    SWektor <typ, rozmiar> & operator [] (unsigned int indeks) {    // Umozliwia wczytywanie kolumn macierzy
+    /*!
+     * \brief Umozliwia wczytywanie kolumn macierzy
+     */ 
+    SWektor <typ, rozmiar> & operator [] (unsigned int indeks) {  
     return kolumny[indeks];}
 
-    SMacierz elementy2 () const;   // Realizuje podnoszenie do kwadratu kazdego z elementow macierzy
+    /*!
+     * \brief Realizuje podnoszenie do kwadratu kazdego z elementow macierzy
+     */ 
+    SMacierz elementy2 () const;   
 
-    void zamien_kolumny (unsigned int indeks1, unsigned int indeks2);    // Realizuje zamiane ze soba kolumn macierzy
+    /*!
+     * \brief Realizuje zamiane ze soba kolumn macierzy
+     */ 
+    void zamien_kolumny (unsigned int indeks1, unsigned int indeks2);    
 
-    typ oblicz_wyznacznik () const;   // Oblicza wyznacznik macierzy metoda eliminacji Gaussa
+    /*!
+     * \brief Oblicza wyznacznik macierzy metoda eliminacji Gaussa
+     */ 
+    typ oblicz_wyznacznik () const;  
 
-    SMacierz podmien_kolumne (unsigned int indeks, SWektor <typ, rozmiar> Wek) const;  // Realizuje podmiane kolumny macierzy z wektorem
+    /*!
+     * \brief Realizuje podmiane kolumny macierzy z wektorem
+     */ 
+    SMacierz podmien_kolumne (unsigned int indeks, SWektor <typ, rozmiar> Wek) const; 
 
-    SMacierz transponuj () const;    // Realizuje transpozycje macierzy
+    /*!
+     * \brief Realizuje transpozycje macierzy
+     */ 
+    SMacierz transponuj () const;    
 
-    SWektor <typ, rozmiar> operator * (SWektor <typ, rozmiar> Wek) const;   // Realizuje mnozenie macierzy z wektorem
+    /*!
+     * \brief Realizuje mnozenie macierzy z wektorem
+     */ 
+    SWektor <typ, rozmiar> operator * (SWektor <typ, rozmiar> Wek) const;   
 };
 
-/*
- * Realizuje podnoszenie do kwadratu kazdego z elementow macierzy.
+/*!
+ * \brief Realizuje podnoszenie do kwadratu kazdego z elementow macierzy.
  */
 template <typename typ, int rozmiar>
 SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::elementy2 () const
@@ -70,8 +101,8 @@ SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::elementy2 () const
 
 
 
-/*
- * Realizuje zamiane ze soba kolumn macierzy.
+/*!
+ * \brief Realizuje zamiane ze soba kolumn macierzy.
  */ 
 template <typename typ, int rozmiar>
 void SMacierz<typ, rozmiar>::zamien_kolumny (unsigned int indeks1, unsigned int indeks2)
@@ -85,8 +116,8 @@ void SMacierz<typ, rozmiar>::zamien_kolumny (unsigned int indeks1, unsigned int 
 
 
 
-/*
- * Oblicza wyznacznik macierzy metoda eliminacji Gaussa.
+/*!
+ * \brief Oblicza wyznacznik macierzy metoda eliminacji Gaussa.
  */
 template <typename typ, int rozmiar>
 typ SMacierz<typ, rozmiar>::oblicz_wyznacznik () const
@@ -132,8 +163,8 @@ typ SMacierz<typ, rozmiar>::oblicz_wyznacznik () const
 
 
 
-/*
- * Realizuje podmiane kolumny macierzy z wektorem.
+/*!
+ * \brief Realizuje podmiane kolumny macierzy z wektorem.
  */
 template <typename typ, int rozmiar>
 SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::podmien_kolumne (unsigned int indeks, SWektor <typ, rozmiar> Wek) const
@@ -148,8 +179,8 @@ SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::podmien_kolumne (unsigned int in
 
 
 
-/*
- * Realizuje transpozycje macierzy.
+/*!
+ * \brief Realizuje transpozycje macierzy.
  */ 
 template <typename typ, int rozmiar>
 SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::transponuj () const
@@ -170,8 +201,8 @@ SMacierz <typ, rozmiar> SMacierz<typ, rozmiar>::transponuj () const
 
 
 
-/*
- * Realizuje mnozenie macierzy z wektorem.
+/*!
+ * \brief Realizuje mnozenie macierzy z wektorem.
  */
 template <typename typ, int rozmiar>
 SWektor <typ, rozmiar> SMacierz<typ, rozmiar>::operator * (SWektor <typ, rozmiar> Wek) const
@@ -195,8 +226,8 @@ SWektor <typ, rozmiar> SMacierz<typ, rozmiar>::operator * (SWektor <typ, rozmiar
 
 
 
-/*
- * Zapisuje kolumny macierzy na strumieniu wyjsciowym. 
+/*!
+ * \brief Zapisuje kolumny macierzy na strumieniu wyjsciowym. 
  */
 template <typename typ, int rozmiar>
 std::ostream & operator << (std::ostream & Str, const SMacierz <typ, rozmiar> & Mac)
@@ -213,8 +244,8 @@ std::ostream & operator << (std::ostream & Str, const SMacierz <typ, rozmiar> & 
 
 
 
-/*
- * Wczytuje kolumny macierzy ze strumienia wejsciowego.
+/*!
+ * \brief Wczytuje kolumny macierzy ze strumienia wejsciowego.
  */ 
 template <typename typ, int rozmiar>
 std::istream & operator >> (std::istream & Str, SMacierz <typ, rozmiar> & Mac)

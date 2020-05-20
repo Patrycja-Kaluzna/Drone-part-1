@@ -2,21 +2,42 @@
 
 
 
-void Powierzchnia::wczytaj_lokalne (std::string nazwa_pliku)
+/*!
+ * Pozwala na dostęp do kontenera zawierającego
+ * zbiór punktów w lokalnym układzie odniesienia.
+ * \return Zwraca wskaźnik na konterer zawierający
+ *          punkty lokalne.
+ */ 
+std::vector<Wektor3D> * Powierzchnia::get_Punkty_lokalne ()
 {
-    std::fstream plik;
-    Wektor3D pom;
+    std::vector<Wektor3D> * pomWsk = &_Punkty_lokalne;
 
-    plik.open(nazwa_pliku, std::ios::in);
-    if (plik.is_open())
+    return pomWsk;
+}
+
+
+
+/*!
+ * Wczytuje ze strumienia plikowego zbiór punktów
+ * w lokalnym układzie odniesienia.
+ * \param [in] Fstr - strumień plikowy, z którego
+ *              zostaną wczytane punkty lokalne.
+ * \param [in] Pow - powierzchnia, której punkty
+ *              lokalne zostaną wczytane.
+ * \pre Fstr i Pow muszą być przekazane przez 
+ *              referencję.
+ * \return Zwraca strumień plikowy.
+ */
+std::ifstream & operator >> (std::ifstream & Fstr, Powierzchnia & Pow)
+{
+    std::vector<Wektor3D> * pomWsk = Pow.get_Punkty_lokalne();
+    Wektor3D pomWek;
+
+    while (Fstr.eof() == false)
     {
-        while (plik.eof() == false)
-        {
-        plik >> pom;
-        _Punkty_lokalne.push_back(pom);
-        }
-    } else {
-        std::cerr << "Błąd: otwarcie pliku " << nazwa_pliku << " nie powiodło się." << std::endl; 
+        Fstr >> pomWek;
+        pomWsk->push_back(pomWek);
     }
-    plik.close();
+
+    return Fstr;
 }
